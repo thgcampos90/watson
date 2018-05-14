@@ -13,8 +13,9 @@ path   = None
 #    print(D["password"][i])
 #    print(D["path"][i])
 
+#print (len(D))
 
-for i in range(0,2):
+for i in range(0,len(D)): 
     workspace = D['workspace'][i]
     password  = D['password'][i]
     path = D['path'][i] + '/' + workspace + '.json' 
