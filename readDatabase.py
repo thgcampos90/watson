@@ -1,25 +1,25 @@
+import json
+import watson_developer_cloud
 import pandas
+import codecs
 
-#print(pandas.read_excel('settings.xls'))
+D = pandas.read_excel('file.xls')
 
-D = pandas.read_excel('settings.xls')
+for i in range(0,len(D)):
+    conversation = watson_developer_cloud.ConversationV1(
+        username= D['user'][i],
+        password=D['password'][i],
+        version=''
+    )
 
-workspace = None
-password  = None 
-path   = None
+    response = conversation.get_workspace(
+        workspace_id=D['workspace_id'][i],
+        export=True,
+    )
 
-#for i in range(0,2):
-#    print(D["workspace"][i])
-#    print(D["password"][i])
-#    print(D["path"][i])
-
-#print (len(D))
-
-for i in range(0,len(D)): 
-    workspace = D['workspace'][i]
-    password  = D['password'][i]
-    path = D['path'][i] + '/' + workspace + '.json' 
-    F = open(path,'w')
-    F.write(workspace)
-    F.close()    
+    company = D['company'][i]
+    path = D['path'][i] + '/' + company + '.json'
+    F = codecs.open(path,'w','utf-8')
+    F.write(json.dumps(response, indent=2))
+    F.close()
 
